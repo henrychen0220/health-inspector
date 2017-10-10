@@ -1,5 +1,7 @@
 import React from 'react';
-
+import 'font-awesome/css/font-awesome.css';
+import './SearchBar.css';
+import PropTypes from 'prop-types';
 
 
 class SearchBar extends React.Component {
@@ -27,6 +29,13 @@ class SearchBar extends React.Component {
     });
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    // function is passed in property from index.js
+    this.props.updateSearchTerm(this.state.search);
+    // make the API call inside the top level component (index.js file)
+  }
+
   //gets called by react automatically when data changed
   render(){
     return (
@@ -40,10 +49,23 @@ class SearchBar extends React.Component {
             placeholder="Search Restaurants"
             onChange={this.handleSearchChange}
           />
+          <button
+            type="submit"
+            className="search-button"
+            onClick={this.handleSubmit}
+          >
+            <i className="search-icon fa fa-search" />
+          </button>
         </form>
       </div>
     );
   }
 }
+
+// specify that 'updateSearchTerm' must be a property type 'function'
+PropTypes.PropTypes = {
+  updateSearchTerm: PropTypes.func.isRequired
+}
+
 // export components
 export default SearchBar;
